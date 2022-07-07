@@ -13,7 +13,7 @@ import (
 
 func StartAlertServer(port string) error {
 	alertServer := service.NewAlertCaterServer(&service.AlertStore{})
-
+	log.SetLevel(log.DebugLevel)
 	grpcServer := grpc.NewServer()
 	pbgen.RegisterCaterAlertRequestServer(grpcServer, alertServer)
 	reflection.Register(grpcServer)

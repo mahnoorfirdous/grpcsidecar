@@ -48,6 +48,6 @@ message AlertSchema {
 }
 service CaterAlertRequest { 
     rpc CaterAlert(AlertRequest) returns (AlertResponse) {};
-    rpc DescribeAlert(DescriptionRequest) returns (AlertRequest) {};
+    rpc DescribeAlert(DescriptionRequest) returns (AlertSchema) {};
     rpc RetrieveAlert(RetrieveAlertRequest) returns (AlertList) {};
 } 

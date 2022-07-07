@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 22 01:08:43 2022
+# Make data base, printed on Thu Jul  7 11:42:17 2022
 
 # Variables
 
@@ -29,7 +29,7 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /home/mahnoor/netstuff/grpcsidecar
+CURDIR := /home/mahnoor/grpcsidecar/grpcsidecar
 # makefile
 SHELL = /bin/sh
 # environment
@@ -55,13 +55,13 @@ GOPROXY = https://proxy.golang.org,direct
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/mahnoor/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/AMD/ATI.ACE/Core-Static:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/dell 3510/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/dell 3510/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/dell 3510/AppData/Roaming/npm:/snap/bin:/usr/local/go/bin
+PATH = /home/mahnoor/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/home/mahnoor/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/AMD/ATI.ACE/Core-Static:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/dell 3510/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/dell 3510/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/dell 3510/AppData/Roaming/npm:/snap/bin:/usr/local/go/bin
 # environment
 GOPATH = /home/mahnoor/go
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-badf05b6-dc9e-40e0-9d83-74319b02207c.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-2a4d8dc5-4bb1-4755-8964-edb58a7fa21e.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,13 +71,13 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/mahnoor/netstuff/grpcsidecar
+PWD = /home/mahnoor/grpcsidecar/grpcsidecar
 # default
 .LOADED := 
 # environment
 WSL_INTEROP = /run/WSL/9_interop
 # environment
-WT_SESSION = ddb78ad0-d781-4142-af3a-533b999bb108
+WT_SESSION = 0c65e17b-1e32-4cbe-bf33-6cddba9c4045
 # environment
 GOMODCACHE = /home/mahnoor/go/pkg/mod
 # environment
@@ -167,7 +167,7 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2064, inode 50422): 9 files, no impossibilities.
+# . (device 2064, inode 108124): 9 files, no impossibilities.
 
 # 9 files, no impossibilities in 1 directories.
 
@@ -188,13 +188,13 @@ cleancodegen:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 9):
 	rm samplepb/*pb.go
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-21 21:29:35.4034993
+#  Last modified 2022-06-28 02:10:05.4807578
 #  File has been updated.
 #  Successfully updated.
 
@@ -204,41 +204,55 @@ Makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
+image:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 13):
+	docker build -t sidecar:03 .
+
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 10):
+#  recipe to execute (from 'Makefile', line 11):
 	rm -r src/server src/client src/sanity
+
+dockerserver:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 7):
+	cd src && CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o server plugin/server/main.go	
 
 codegen:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 4):
+#  recipe to execute (from 'Makefile', line 3):
 	protoc -I=./protodef --go_out=src/pbgen --go_opt=paths=source_relative  --go-grpc_out=src/pbgen --go-grpc_opt=paths=source_relative protodef/*.proto
 
 bins:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 6):
+#  recipe to execute (from 'Makefile', line 5):
 	cd src && ./build.sh
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/18=0%
+# Load=10/1024=1%, Rehash=0, Collisions=0/20=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 161 B / avg = 8 B
-# current buf: size = 8162 B / used = 161 B / count = 18 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 20 / storage = 180 B / avg = 9 B
+# current buf: size = 8162 B / used = 180 B / count = 20 / avg = 9 B
 
-# strcache performance: lookups = 26 / hit rate = 30%
+# strcache performance: lookups = 30 / hit rate = 33%
 # hash-table stats:
-# Load=18/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Wed Jun 22 01:08:43 2022
+# Load=20/8192=0%, Rehash=0, Collisions=1/30=3%
+# Finished Make data base on Thu Jul  7 11:42:17 2022
 
  

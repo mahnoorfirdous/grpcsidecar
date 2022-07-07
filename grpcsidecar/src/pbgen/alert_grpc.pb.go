@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CaterAlertRequestClient interface {
 	CaterAlert(ctx context.Context, in *AlertRequest, opts ...grpc.CallOption) (*AlertResponse, error)
-	DescribeAlert(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*AlertRequest, error)
+	DescribeAlert(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*AlertSchema, error)
 	RetrieveAlert(ctx context.Context, in *RetrieveAlertRequest, opts ...grpc.CallOption) (*AlertList, error)
 }
 
@@ -44,8 +44,8 @@ func (c *caterAlertRequestClient) CaterAlert(ctx context.Context, in *AlertReque
 	return out, nil
 }
 
-func (c *caterAlertRequestClient) DescribeAlert(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*AlertRequest, error) {
-	out := new(AlertRequest)
+func (c *caterAlertRequestClient) DescribeAlert(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*AlertSchema, error) {
+	out := new(AlertSchema)
 	err := c.cc.Invoke(ctx, "/alerter.CaterAlertRequest/DescribeAlert", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (c *caterAlertRequestClient) RetrieveAlert(ctx context.Context, in *Retriev
 // for forward compatibility
 type CaterAlertRequestServer interface {
 	CaterAlert(context.Context, *AlertRequest) (*AlertResponse, error)
-	DescribeAlert(context.Context, *DescriptionRequest) (*AlertRequest, error)
+	DescribeAlert(context.Context, *DescriptionRequest) (*AlertSchema, error)
 	RetrieveAlert(context.Context, *RetrieveAlertRequest) (*AlertList, error)
 	mustEmbedUnimplementedCaterAlertRequestServer()
 }
@@ -79,7 +79,7 @@ type UnimplementedCaterAlertRequestServer struct {
 func (UnimplementedCaterAlertRequestServer) CaterAlert(context.Context, *AlertRequest) (*AlertResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CaterAlert not implemented")
 }
-func (UnimplementedCaterAlertRequestServer) DescribeAlert(context.Context, *DescriptionRequest) (*AlertRequest, error) {
+func (UnimplementedCaterAlertRequestServer) DescribeAlert(context.Context, *DescriptionRequest) (*AlertSchema, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeAlert not implemented")
 }
 func (UnimplementedCaterAlertRequestServer) RetrieveAlert(context.Context, *RetrieveAlertRequest) (*AlertList, error) {

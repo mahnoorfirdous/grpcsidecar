@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"grsidecar/pbgen"
+	"grsidecar/serialize_wrappers"
 
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
@@ -34,7 +35,7 @@ func (s *AlertRequestServer) CaterAlert(ctx context.Context, req *pbgen.AlertReq
 	alert := req.GetAlertsbatch()
 	if alert == nil {
 		return nil, status.Errorf(codes.InvalidArgument,
-			"Sorry, you need to provide the parameters! Please call UnimplementedDescribeAlert for info!")
+			"Sorry, you need to provide the parameters! Please call DescribeAlert for info!")
 	} else {
 		log.Infof("Received request to service an alert with cid : %s", req.Cid)
 		err := s.AlertsMem.StoreAlert(alert)
@@ -56,4 +57,33 @@ func (s *AlertRequestServer) CaterAlert(ctx context.Context, req *pbgen.AlertReq
 	}
 	//pass to relevant processes to handle
 	return &pbgen.AlertResponse{Seen: "Alert will be serviced soon"}, nil
+}
+
+func (s *AlertRequestServer) DescribeAlert(ctx context.Context, request *pbgen.DescriptionRequest) (*pbgen.AlertSchema, error) {
+	schemafor := request.Giveme
+	if schemafor == "Alerts" || schemafor == "alerts" {
+		schema := serialize_wrappers.ProtobuftoJson(&pbgen.AlertRequest{
+			Alertsbatch: &pbgen.AlertList{
+				Alerts: []*pbgen.AlertDetail{{},
+					{},
+				},
+			},
+		})
+		if schema == "" {
+			log.Println("Something went wrong")
+			log.Debugf("Schema produced %v\n", schema)
+			return &pbgen.AlertSchema{Schema: "oops"}, status.Error(codes.Internal, "Error converting to string")
+		} else {
+			return &pbgen.AlertSchema{Schema: schema}, nil
+		}
+	}
+	return &pbgen.AlertSchema{Schema: "Describe What?"}, nil
+}
+
+func (s *AlertRequestServer) RetrieveAlert(ctx context.Context, requested *pbgen.RetrieveAlertRequest) (list *pbgen.AlertList, err error) {
+	found, err := s.AlertsMem.Search(requested)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	return &pbgen.AlertList{Alerts: []*pbgen.AlertDetail{found}}, nil
 }

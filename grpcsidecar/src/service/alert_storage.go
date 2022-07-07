@@ -58,6 +58,16 @@ func (as *AlertStore) StoreLocally(alertr *pbgen.AlertDetail) error {
 	return nil
 }
 
+func (as *AlertStore) Search(param *pbgen.RetrieveAlertRequest) (*pbgen.AlertDetail, error) {
+	as.take.RLock()
+	defer as.take.RUnlock()
+	if found := as.Store[param.Cid]; found == nil {
+		return nil, errors.New("sorry, we can't find an alert with that name")
+	} else {
+		return found, nil
+	}
+}
+
 func deepCopy(alertr *pbgen.AlertDetail) (*pbgen.AlertDetail, error) {
 	newentry := &pbgen.AlertDetail{}
 
