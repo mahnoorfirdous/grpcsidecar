@@ -77,3 +77,7 @@ func deepCopy(alertr *pbgen.AlertDetail) (*pbgen.AlertDetail, error) {
 	}
 	return newentry, nil
 }
+
+func (as *AlertStore) String() string {
+	return fmt.Sprintf("%x", as)
+}

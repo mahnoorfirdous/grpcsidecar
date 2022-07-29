@@ -1,10 +1,11 @@
-package service_test
+package service
 
 import (
 	"context"
 	"grsidecar/pbgen"
 	"grsidecar/sample"
-	"grsidecar/service"
+
+	//"grsidecar/service"
 	"net"
 	"testing"
 
@@ -13,8 +14,8 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func StartTestAlertServer(t *testing.T, alertstore *service.AlertStore) string {
-	alertserver := service.NewAlertCaterServer(alertstore)
+func StartTestAlertServer(t *testing.T, alertstore *AlertStore) string {
+	alertserver := NewAlertCaterServer(alertstore)
 	grpcServe := grpc.NewServer()
 	pbgen.RegisterCaterAlertRequestServer(grpcServe, alertserver)
 
@@ -34,9 +35,9 @@ func MakeTestAlertClient(t *testing.T, serverAdd string) pbgen.CaterAlertRequest
 }
 
 func StartTestAlertClient(t *testing.T) {
-	t.Parallel()
+	//	t.Parallel()
 
-	alertss := &service.AlertStore{}
+	alertss := &AlertStore{}
 	alertss.ReadyAlertStore()
 	serverAdd := StartTestAlertServer(t, alertss)
 	alertclient := MakeTestAlertClient(t, serverAdd)
